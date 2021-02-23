@@ -67,5 +67,7 @@ int CALLBACK WinMain(
 		DispatchMessage(&msg);
 	}
 
+	UnregisterClass(pClassName, hInstance);
+
 	return g_Result == -1 ? -1 : int(msg.wParam);
 }

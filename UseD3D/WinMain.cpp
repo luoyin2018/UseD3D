@@ -1,30 +1,6 @@
 #include <windows.h>
+#include "Window.h"
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	switch (msg)
-	{
-	case WM_CLOSE:
-		PostQuitMessage(69);
-		break;
-	case WM_KEYDOWN:
-		break;
-	case WM_KEYUP:
-		break;
-	case WM_CHAR:
-		break;
-	case WM_LBUTTONDOWN:
-		{
-		const auto pt = MAKEPOINTS(lParam);
-		
-		}
-		break;
-	default:
-		break;
-	}
-
-	return DefWindowProc(hWnd, msg, wParam, lParam);
-}
 
 int CALLBACK WinMain(
 	HINSTANCE hInstance,
@@ -32,31 +8,8 @@ int CALLBACK WinMain(
 	LPSTR     lpCmdLine,
 	int       nShowCmd)
 {
-	const auto pClassName = L"hw3d_study";
-	WNDCLASSEX wc = {
-		.cbSize = sizeof(wc),
-		.style = CS_OWNDC,
-		.lpfnWndProc = WndProc,
-		.cbClsExtra = 0,
-		.cbWndExtra = 0,
-		.hInstance = hInstance,
-		.hIcon = nullptr,
-		.hCursor = nullptr,
-		.hbrBackground = nullptr,
-		.lpszMenuName = nullptr,
-		.lpszClassName = pClassName,
-		.hIconSm = nullptr };
-
-	RegisterClassEx(&wc);
-
-	const auto h_wnd = CreateWindowEx(
-		0, pClassName,
-		L"HELLO DirectX",
-		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
-		200, 200, 640, 480,
-		nullptr, nullptr, hInstance, nullptr);
-
-	ShowWindow(h_wnd, SW_SHOW);
+	Window wnd(100, 100, 800, 300, L"Hello, windows!");
+	Window wnd2(100, 100, 300, 800, L"Hello, windows!");
 
 	MSG msg;
 	BOOL g_Result;
@@ -66,8 +19,6 @@ int CALLBACK WinMain(
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-
-	UnregisterClass(pClassName, hInstance);
 
 	return g_Result == -1 ? -1 : int(msg.wParam);
 }
